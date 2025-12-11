@@ -2,17 +2,13 @@
 
 echo "🔧 Setting up your personalized environment..."
 
+# Determine where the dotfiles are (where this script is located)
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Debug: Show where we are
 echo "Current directory: $(pwd)"
 echo "Home directory: $HOME"
-echo "Dotfiles should be at: $HOME/dotfiles"
-
-# Check if dotfiles directory exists
-if [ ! -d "$HOME/dotfiles" ]; then
-    echo "❌ Dotfiles directory not found at $HOME/dotfiles"
-    echo "This script should be run from the dotfiles directory or dotfiles should be in HOME"
-    exit 1
-fi
+echo "Dotfiles directory: $DOTFILES_DIR"
 
 # Backup existing configs
 backup_if_exists() {
@@ -24,7 +20,6 @@ backup_if_exists() {
 
 # Link dotfiles
 link_dotfile() {
-    DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     source_file="$DOTFILES_DIR/$1"
     target_file="$HOME/$1"
     
@@ -42,14 +37,14 @@ link_dotfile ".gitconfig"
 link_dotfile ".bash_aliases"
 
 # Append custom bashrc to existing .bashrc
-if [ -f "$HOME/dotfiles/.bashrc_custom" ]; then
+if [ -f "$DOTFILES_DIR/.bashrc_custom" ]; then
     echo "✨ Adding custom bashrc settings"
     
     # Check if already added (to avoid duplicates)
     if ! grep -q "Custom settings from dotfiles" ~/.bashrc 2>/dev/null; then
         echo "" >> ~/.bashrc
         echo "# Custom settings from dotfiles" >> ~/.bashrc
-        cat "$HOME/dotfiles/.bashrc_custom" >> ~/.bashrc
+        cat "$DOTFILES_DIR/.bashrc_custom" >> ~/.bashrc
         echo "✅ Custom bashrc settings added"
     else
         echo "ℹ️  Custom bashrc settings already present"
