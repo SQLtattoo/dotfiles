@@ -1,7 +1,5 @@
-# Create .gitconfig
-@"
 [user]
-    name = admin960084
+    name = admin960084vi
     email = admin@MngEnvMCAP960084.onmicrosoft.com
 
 [core]
@@ -30,4 +28,9 @@
 
 [pull]
     rebase = false
-"@ | Out-File -FilePath .gitconfig -Encoding utf8
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

@@ -1,5 +1,3 @@
-# Create .bashrc_custom
-@"
 # Custom Bashrc for Codespaces
 
 # Load aliases
@@ -28,4 +26,3 @@ echo '🚀 Welcome to your personalized Codespace!'
 echo '📁 Workspace: '$(pwd)
 echo '🔧 Dotfiles loaded successfully'
 echo ''
-"@ | Out-File -FilePath .bashrc_custom -Encoding utf8
